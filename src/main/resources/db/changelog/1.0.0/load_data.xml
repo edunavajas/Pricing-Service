@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="load_data" author="edunavajas">
+        <loadData file="db/changelog/data/users.csv" separator="," tableName="user"/>
+        <loadData file="db/changelog/data/authority.csv" separator="," tableName="authority"/>
+        <loadData file="db/changelog/data/user_authority.csv" separator="," tableName="user_authority"/>
+        <loadData file="db/changelog/data/price.csv" separator="," tableName="price"/>
+    </changeSet>
+
+    <changeSet id="create_price_seq" author="edunavajas">
+        <createSequence sequenceName="price_seq" startValue="5" incrementBy="1"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: Edu Navajas Pricing Service API
+  description: API to manage and retrieve product pricing based on date and product ID.
+  version: "1.0"
+
+paths:
+  /auth:
+    post:
+      tags:
+        - Authentication
+      summary: Authenticate a user
+      operationId: authenticateUser
+      requestBody:
+        description: Authentication request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
+        '401':
+          description: Unauthorized
+  /prices:
+    get:
+      tags:
+        - Price
+      summary: Get product pricing
+      parameters:
+        - name: dateTime
+          in: query
+          required: true
+          description: The date and time for which price details are required.
+          schema:
+            type: string
+            format: date-time
+        - name: productId
+          in: query
+          required: true
+          description: The ID of the product.
+          schema:
+            type: integer
+        - name: brandId
+          in: query
+          required: true
+          description: The ID of the brand.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response with the product pricing details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+        '400':
+          description: Bad request. Invalid input.
+        '404':
+          description: Pricing details not found for the given parameters.
+
+components:
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthenticationRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    AuthenticationResponse:
+      type: object
+      properties:
+        jwt:
+          type: string
+    PriceResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          description: The ID of the product.
+        brandId:
+          type: integer
+          description: The ID of the brand.
+        priceList:
+          type: integer
+          description: The ID of the price list.
+        startDate:
+          type: string
+          format: date-time
+          description: The start date and time of the price application.
+        endDate:
+          type: string
+          format: date-time
+          description: The end date and time of the price application.
+        price:
+          type: number
+          format: double
+          description: The final price to apply.
+
