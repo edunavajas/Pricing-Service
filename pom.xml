@@ -164,6 +164,7 @@
                                     @lombok.NoArgsConstructor
                                 </additionalModelTypeAnnotations>
                             </configOptions>
+                            <addCompileSourceRoot>true</addCompileSourceRoot>
                         </configuration>
                     </execution>
                 </executions>
